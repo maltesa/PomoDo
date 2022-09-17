@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { WeekHeadline } from "./components/WeekHeadline/WeekHeadline";
-import { useWeekType } from "./utils/calcWeekNumber";
+import { useWeekType } from "./utils/useWeekType";
 
 function App() {
   const weekType = useWeekType();

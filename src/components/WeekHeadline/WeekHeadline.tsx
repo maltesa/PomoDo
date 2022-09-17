@@ -1,4 +1,4 @@
-import { useWeekType } from "../../utils/calcWeekNumber";
+import { useWeekType } from "../../utils/useWeekType";
 
 export function WeekHeadline() {
   const [letter, ...rest] = useWeekType();
