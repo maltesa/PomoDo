@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { TodoList } from "./components/TodoList";
 import { WeekHeadline } from "./components/WeekHeadline/WeekHeadline";
 import { useWeekType } from "./utils/useWeekType";
 
@@ -14,8 +15,12 @@ function App() {
   }, [weekType]);
 
   return (
-    <div className="h-screen flex flex-col gap-8 items-center justify-center dark:bg-black dark:text-white p-8">
+    <div className="bg-slate-100 h-screen flex flex-col items-center dark:bg-black dark:text-white px-8 pt-28 pb-8 overflow-auto">
       <WeekHeadline />
+      <div className="grid grid-cols-2 w-full mt-36">
+        <TodoList />
+        <div></div>
+      </div>
     </div>
   );
 }

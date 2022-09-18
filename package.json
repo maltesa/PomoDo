@@ -10,12 +10,19 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
+    "dexie": "^3.2.2",
+    "dexie-react-hooks": "^1.1.1",
+    "framer-motion": "^7.3.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "timestring": "^6.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/timestring": "^6.0.2",
+    "@types/uuid": "^8.3.4",
     "@vitejs/plugin-react": "^2.1.0",
     "autoprefixer": "^10.4.11",
     "postcss": "^8.4.16",

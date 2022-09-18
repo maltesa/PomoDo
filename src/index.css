@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .is-active {
+    @apply border focus-within:dark:border-slate-500;
+  }
+}
