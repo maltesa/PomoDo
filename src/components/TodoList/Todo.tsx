@@ -6,8 +6,8 @@ import {
 } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { db, DBTodo } from "../../db";
-import { useWeekType } from "../../utils/useWeekType";
+import { db, DBTodo } from "@/src/db";
+import { useWeekType } from "@/utils/useWeekType";
 
 interface Props extends Partial<DBTodo> {
   autoFocus?: boolean;

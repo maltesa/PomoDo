@@ -2,8 +2,8 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Reorder } from "framer-motion";
 import { useCallback } from "react";
 
-import { db, DBTodo } from "../../db";
-import { useWeekType } from "../../utils/useWeekType";
+import { db, DBTodo } from "@/src/db";
+import { useWeekType } from "@/utils/useWeekType";
 import { Todo } from "./Todo";
 
 export function TodoList() {
@@ -57,7 +57,7 @@ export function TodoList() {
         <Todo
           autoFocus
           key={Math.random()}
-          placeholder="Add a new ToDo"
+          placeholder="Add a new Task"
           nextIndex={todos.length}
         />
       </div>

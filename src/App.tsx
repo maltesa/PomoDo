@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import { TodoList } from "./components/TodoList";
-import { WeekHeadline } from "./components/WeekHeadline/WeekHeadline";
-import { useWeekType } from "./utils/useWeekType";
+
+import { Timer } from "@/components/Timer";
+import { TodoList } from "@/components/TodoList";
+import { WeekHeadline } from "@/components/WeekHeadline/WeekHeadline";
+import { useWeekType } from "@/utils/useWeekType";
 
 function App() {
   const weekType = useWeekType();
@@ -19,7 +21,9 @@ function App() {
       <WeekHeadline />
       <div className="grid grid-cols-2 w-full mt-36">
         <TodoList />
-        <div></div>
+        <div>
+          <Timer />
+        </div>
       </div>
     </div>
   );
