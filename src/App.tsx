@@ -21,9 +21,7 @@ function App() {
       <WeekHeadline />
       <div className="grid grid-cols-2 w-full mt-36">
         <TodoList />
-        <div>
-          <Timer />
-        </div>
+        <Timer />
       </div>
     </div>
   );
