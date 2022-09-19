@@ -8,6 +8,10 @@ function calcWeekNumber() {
   return Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
 }
 
-export function useWeekType() {
+export function getWeekType() {
   return calcWeekNumber() % 2 === 0 ? "coding" : "marketing";
+}
+
+export function useWeekType() {
+  return getWeekType();
 }

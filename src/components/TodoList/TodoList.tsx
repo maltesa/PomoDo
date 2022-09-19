@@ -4,62 +4,60 @@ import { useCallback } from "react";
 
 import { db, DBTodo } from "@/src/db";
 import { useWeekType } from "@/utils/useWeekType";
+import { CreateTodo } from "./CreateTodo";
 import { Todo } from "./Todo";
 
 export function TodoList() {
   const weekType = useWeekType();
-  const todos =
-    useLiveQuery(
-      async () =>
-        db.todos.where({ category: weekType, completed: 0 }).sortBy("index"),
-      []
-    ) || [];
+  const todoList: DBTodo[] = useLiveQuery(
+    async () =>
+      await db.todos.where({ category: weekType, completed: 0 }).sortBy("pos"),
+    [],
+    []
+  );
 
   const handleReorder = useCallback(
-    (reorderedToDos: DBTodo[]) => {
+    (reorderedItems: DBTodo[]) => {
       let swap1: DBTodo | undefined;
       let swap2: DBTodo | undefined;
 
       // Diff reordered todos with previous order to find swapped elements
-      reorderedToDos.forEach((todo, index) => {
-        if (todos[index].id !== todo.id) {
-          if (!swap1) swap1 = todos[index];
-          else if (!swap2) swap2 = todos[index];
+      reorderedItems.forEach(({ id }, i) => {
+        const item = todoList[i];
+        if (item.id !== id) {
+          if (!swap1) swap1 = item;
+          else if (!swap2) swap2 = item;
           else return;
         }
       });
 
+      // Swap item indices
       if (swap1 && swap2) {
         db.todos.bulkPut([
-          { ...swap1, index: swap2.index },
-          { ...swap2, index: swap1.index },
+          { ...swap1, pos: swap2.pos },
+          { ...swap2, pos: swap1.pos },
         ]);
       }
     },
-    [todos]
+    [todoList]
   );
 
   return (
     <div>
       <Reorder.Group
         axis="y"
-        values={todos}
+        values={todoList}
         onReorder={handleReorder}
         className="flex flex-col gap-3"
       >
-        {todos.map((todo) => (
+        {todoList.map((todo, i) => (
           <Reorder.Item key={todo.id} value={todo}>
-            <Todo key={todo.id} {...todo} />
+            <Todo isActive={i === 0} {...todo} />
           </Reorder.Item>
         ))}
       </Reorder.Group>
       <div className="mt-3">
-        <Todo
-          autoFocus
-          key={Math.random()}
-          placeholder="Add a new Task"
-          nextIndex={todos.length}
-        />
+        <CreateTodo pos={todoList.length} />
       </div>
     </div>
   );

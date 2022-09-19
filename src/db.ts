@@ -4,9 +4,9 @@ export interface DBTodo {
   id: string;
   completed: 0 | 1;
   description: string;
-  remainingTimeStr: string;
+  remainingMs: number;
   category: string;
-  index: number;
+  pos: number;
   createdAt: number;
 }
 
@@ -16,7 +16,7 @@ export class PomoDoDb extends Dexie {
   constructor() {
     super("pomododb");
     this.version(1).stores({
-      todos: "id, index, category, completed, createdAt, [category+completed]",
+      todos: "id, pos, category, completed, createdAt, [category+completed]",
     });
   }
 }
