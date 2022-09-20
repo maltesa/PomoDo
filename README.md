@@ -2,7 +2,7 @@
   <h1 align="center">PomoDo</h1>
 
   <p align="center">
-    Pomodoro Timer for Solopreneure & Indiehackers
+    Pomodoro Timer for Solopreneurs & Indiehackers
   </p>
 
 <p align="center">
@@ -69,7 +69,3 @@ Contributions are what make the open source community such an amazing place to b
 4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 5. Push to the branch (`git push origin feature/AmazingFeature`)
 6. Open a pull request
-
-## License
-
-Distributed under the AGPLv3 License. See `LICENSE` for more information.
