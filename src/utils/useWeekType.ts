@@ -1,11 +1,11 @@
 function calcWeekNumber() {
-  const currentdate = new Date();
-  const oneJan = new Date(currentdate.getFullYear(), 0, 1);
-  const numberOfDays = Math.floor(
-    (currentdate.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000)
+  const currentDate = new Date();
+  const startDate = new Date(currentDate.getFullYear(), 0, 1);
+  const days = Math.floor(
+    (currentDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)
   );
 
-  return Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
+  return Math.ceil(days / 7);
 }
 
 export function getWeekType() {
