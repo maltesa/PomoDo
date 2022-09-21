@@ -27,7 +27,7 @@ export function Button({
   return (
     <button
       className={classNames(
-        "px-4 py-2 border rounded bg-white dark:bg-slate-900",
+        "px-4 py-2 border rounded bg-white dark:bg-slate-900 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-800",
         className
       )}
       {...btnProps}
