@@ -17,7 +17,7 @@ function App() {
   }, [weekType]);
 
   return (
-    <div className="bg-slate-100 h-screen flex flex-col items-center dark:bg-black dark:text-white px-8 pt-28 pb-8 overflow-auto">
+    <div className="bg-slate-200 h-screen flex flex-col items-center dark:bg-black dark:text-white px-8 pt-28 pb-8 overflow-auto">
       <WeekHeadline />
       <div className="grid grid-cols-2 w-full mt-36">
         <TodoList />
