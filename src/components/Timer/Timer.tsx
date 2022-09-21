@@ -47,7 +47,7 @@ export function Timer() {
   return (
     <div className="space-y-8">
       <div className="text-7xl font-light text-center">
-        {serializeTimeStr(remainingMs)}&nbsp;
+        {serializeTimeStr(remainingMs)}
       </div>
       <div className="flex justify-center gap-4 mx-auto">
         <Button
