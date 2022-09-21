@@ -7,11 +7,7 @@ import { useWeekType } from "@/utils/useWeekType";
 
 import { TodoInput } from "./TodoInput";
 
-interface Props {
-  pos: number;
-}
-
-export function CreateTodo({ pos }: Props) {
+export function CreateTodo() {
   const weekType = useWeekType();
   const [refresh, setReferesh] = useState(Math.random());
 
@@ -28,6 +24,7 @@ export function CreateTodo({ pos }: Props) {
       remainingMs={sessionDurationMs}
       createdAt={0}
       onSubmit={async (newTodo) => {
+        const pos = await db.todos.count();
         await db.todos.add({
           ...newTodo,
           id: uuid(),

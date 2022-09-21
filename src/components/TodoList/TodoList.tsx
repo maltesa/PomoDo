@@ -57,7 +57,7 @@ export function TodoList() {
         ))}
       </Reorder.Group>
       <div className="mt-3">
-        <CreateTodo pos={todoList.length} />
+        <CreateTodo />
       </div>
     </div>
   );
