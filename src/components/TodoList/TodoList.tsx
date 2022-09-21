@@ -5,14 +5,15 @@ import { useCallback } from "react";
 import { db, DBTodo } from "@/src/db";
 import { useWeekType } from "@/utils/useWeekType";
 import { CreateTodo } from "./CreateTodo";
+import { Stats } from "./Stats";
 import { Todo } from "./Todo";
 
 export function TodoList() {
   const weekType = useWeekType();
-  const todoList: DBTodo[] = useLiveQuery(
+  const todos: DBTodo[] = useLiveQuery(
     async () =>
       await db.todos.where({ category: weekType, completed: 0 }).sortBy("pos"),
-    [],
+    [weekType],
     []
   );
 
@@ -23,7 +24,7 @@ export function TodoList() {
 
       // Diff reordered todos with previous order to find swapped elements
       reorderedItems.forEach(({ id }, i) => {
-        const item = todoList[i];
+        const item = todos[i];
         if (item.id !== id) {
           if (!swap1) swap1 = item;
           else if (!swap2) swap2 = item;
@@ -39,26 +40,32 @@ export function TodoList() {
         ]);
       }
     },
-    [todoList]
+    [todos]
   );
 
   return (
-    <div>
-      <Reorder.Group
-        axis="y"
-        values={todoList}
-        onReorder={handleReorder}
-        className="flex flex-col gap-3"
-      >
-        {todoList.map((todo, i) => (
-          <Reorder.Item key={todo.id} value={todo}>
-            <Todo isActive={i === 0} {...todo} />
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
-      <div className="mt-3">
-        <CreateTodo />
+    <div className="space-y-8">
+      {/* TODO List */}
+      <div>
+        <Reorder.Group
+          axis="y"
+          values={todos}
+          onReorder={handleReorder}
+          className="flex flex-col gap-3"
+        >
+          {todos.map((todo, i) => (
+            <Reorder.Item key={todo.id} value={todo}>
+              <Todo isActive={i === 0} {...todo} />
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+        <div className="mt-3">
+          <CreateTodo />
+        </div>
       </div>
+
+      {/* Stats */}
+      <Stats todos={todos} />
     </div>
   );
 }
