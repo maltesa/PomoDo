@@ -7,6 +7,7 @@ import { serializeTimeStr } from "@/src/utils/timeStrings";
 import { useTimer } from "@/utils/useTimer";
 import { getWeekType } from "@/utils/useWeekType";
 
+import { Button } from "@/components/common/Button";
 import sessionAudio from "@/src/static/audio/readytoflow.ogg";
 import breakAudio from "@/src/static/audio/takeabreak.ogg";
 
@@ -49,16 +50,13 @@ export function Timer() {
         {serializeTimeStr(remainingMs)}&nbsp;
       </div>
       <div className="flex justify-center gap-4 mx-auto">
-        <button
+        <Button
           onClick={status === "running" ? stop : start}
-          className="px-4 py-2 border rounded"
-        >
-          {status === "running" ? <PauseIcon /> : <PlayIcon />}
-        </button>
-        <button onClick={nextTimer} className="px-4 py-2 border rounded">
-          <TrackNextIcon className="mr-2 inline" />
+          icon={status === "running" ? PauseIcon : PlayIcon}
+        />
+        <Button onClick={nextTimer} icon={TrackNextIcon}>
           {isBreak ? "Session" : "Break"}
-        </button>
+        </Button>
       </div>
     </div>
   );
