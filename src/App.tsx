@@ -4,6 +4,7 @@ import { Timer } from "@/components/Timer";
 import { TodoList } from "@/components/TodoList";
 import { WeekHeadline } from "@/components/WeekHeadline/WeekHeadline";
 import { useWeekType } from "@/utils/useWeekType";
+import { Priciniples } from "./components/Pricinples";
 
 function App() {
   const weekType = useWeekType();
@@ -17,11 +18,16 @@ function App() {
   }, [weekType]);
 
   return (
-    <div className="bg-slate-200 h-screen flex flex-col items-center dark:bg-black dark:text-white px-8 pt-28 pb-8 overflow-auto">
+    <div className="flex h-screen flex-col items-center overflow-auto bg-slate-200 px-8 pt-28 pb-8 dark:bg-black dark:text-white">
       <WeekHeadline />
-      <div className="grid grid-cols-2 w-full mt-36">
+      <div className="mt-36 grid w-full grid-cols-2">
         <TodoList />
-        <Timer />
+        <div className="flex flex-col gap-12">
+          <Timer />
+          <div>
+            <Priciniples />
+          </div>
+        </div>
       </div>
     </div>
   );
