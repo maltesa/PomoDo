@@ -12,7 +12,7 @@ export const PopoverColorPicker = ({ color, onChange }: Props) => {
   return (
     <div className="relative">
       <div
-        className="h-11 w-11 cursor-pointer rounded border dark:border-slate-800"
+        className="h-11 w-12 cursor-pointer rounded border border-transparent"
         style={{ backgroundColor: color }}
         onClick={() => setIsOpen(true)}
       />

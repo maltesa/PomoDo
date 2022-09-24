@@ -10,28 +10,13 @@ import { db, DBPrinciple } from "@/src/db";
 import { useForm } from "@/utils/useForm";
 
 export function Priciniples() {
-  const principles = useLiveQuery(() => db.principles.toArray());
-
   return (
     <div>
       <h2 className="mb-4 text-center text-lg font-medium text-slate-300">
         Things you want to be reminded of.
       </h2>
       <CreatePrinciple />
-      <AnimatePresence>
-        <ul className="mt-6 flex flex-wrap justify-center gap-4 px-8">
-          {(principles || []).map((priciple) => (
-            <motion.li
-              key={priciple.id}
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 10, opacity: 0 }}
-            >
-              <Priciple {...priciple} />
-            </motion.li>
-          ))}
-        </ul>
-      </AnimatePresence>
+      <PricipleList />
     </div>
   );
 }
@@ -45,16 +30,14 @@ function CreatePrinciple() {
     try {
       await db.principles.add({ principle, href, color });
       formElement.reset();
+      setPriciple("");
     } catch {
       alert("Failed to add priciple. Try again.");
     }
   });
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto flex max-w-lg flex-col gap-2"
-    >
+    <form onSubmit={handleSubmit} className="mx-auto max-w-lg">
       <div className="flex items-center gap-2">
         <Input
           required
@@ -66,23 +49,49 @@ function CreatePrinciple() {
         />
         <PopoverColorPicker color={color} onChange={setColor} />
       </div>
-      {priciple.length > 0 && (
-        <motion.div
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -10, opacity: 0 }}
-          className="flex items-center gap-2"
-        >
-          <Input
-            type="text"
-            name="href"
-            placeholder="URL (optional)"
-            className="flex-grow"
-          />
-          <Button icon={PlusIcon} />
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {priciple.length > 0 && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, delay: 0.3 }}
+          >
+            <div className="flex items-center gap-2 pt-2">
+              <Input
+                type="text"
+                name="href"
+                placeholder="URL (optional)"
+                className="flex-grow"
+              />
+              <Button icon={PlusIcon} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </form>
+  );
+}
+
+function PricipleList() {
+  const principles = useLiveQuery(() => db.principles.toArray());
+
+  return (
+    <ul className="mt-6 flex flex-wrap justify-center px-8">
+      <AnimatePresence>
+        {(principles || []).map((priciple) => (
+          <motion.li
+            key={priciple.id}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "auto", opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            className="overflow-hidden"
+          >
+            <Priciple {...priciple} />
+          </motion.li>
+        ))}
+      </AnimatePresence>
+    </ul>
   );
 }
 
@@ -93,7 +102,7 @@ function Priciple({ id, principle, href, color }: DBPrinciple) {
 
   return (
     <div
-      className="flex items-center gap-2 rounded py-1 px-3 text-sm text-white"
+      className="m-1.5 flex items-center gap-2 whitespace-nowrap rounded py-1 px-3 text-sm text-white"
       style={{ background: color }}
     >
       {href ? (
