@@ -46,23 +46,25 @@ export function TodoList() {
   return (
     <div className="space-y-8">
       {/* TODO List */}
-      <div>
-        <Reorder.Group
-          axis="y"
-          values={todos}
-          onReorder={handleReorder}
-          className="flex flex-col gap-3"
-        >
-          {todos.map((todo, i) => (
-            <Reorder.Item key={todo.id} value={todo}>
-              <Todo isActive={i === 0} {...todo} />
-            </Reorder.Item>
-          ))}
-        </Reorder.Group>
-        <div className="mt-3">
-          <CreateTodo />
-        </div>
-      </div>
+      <Reorder.Group
+        axis="y"
+        values={todos}
+        onReorder={handleReorder}
+        className="flex flex-col gap-3"
+      >
+        {todos.map((todo, i) => (
+          <Reorder.Item
+            key={todo.id}
+            value={todo}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            layout
+          >
+            <Todo isActive={i === 0} {...todo} />
+          </Reorder.Item>
+        ))}
+      </Reorder.Group>
+      <CreateTodo />
 
       {/* Stats */}
       <Stats todos={todos} />

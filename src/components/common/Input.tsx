@@ -6,15 +6,16 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 >;
 
-export const Input = React.forwardRef(
+export const Input = React.forwardRef<HTMLInputElement, Props>(
   ({ className, ...inputProps }: Props, ref) => {
     return (
       <input
         className={classNames(
-          "rounded border border-slate-200 bg-white px-3 py-2 outline-none focus:border-slate-400 dark:border-slate-700 dark:bg-slate-800 focus:dark:border-slate-500",
+          "focus:is-active rounded border border-slate-200 bg-white px-3 py-2 text-lg outline-none dark:border-slate-700 dark:bg-slate-800",
           className
         )}
         {...inputProps}
+        ref={ref}
       />
     );
   }

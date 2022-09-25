@@ -43,7 +43,7 @@ export function TimeInput({
   };
 
   const styles = classNames(
-    "bg-transparent py-1 w-20 bg-slate-200 dark:bg-slate-600 font-medium outline-none rounded text-center text-sm border border-transparent",
+    "py-1 w-20 bg-slate-200 dark:bg-slate-600 font-medium outline-none rounded text-center text-sm border border-transparent",
     isActive && "border-orange-500"
   );
 

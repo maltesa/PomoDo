@@ -4,6 +4,6 @@
 
 @layer utilities {
   .is-active {
-    @apply border focus-within:dark:border-slate-500;
+    @apply border-slate-400 dark:border-slate-700;
   }
 }

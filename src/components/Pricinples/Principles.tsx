@@ -1,6 +1,6 @@
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useLiveQuery } from "dexie-react-hooks";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useState } from "react";
 
 import { Button } from "@/components/common/Button";
@@ -12,7 +12,7 @@ import { useForm } from "@/utils/useForm";
 export function Priciniples() {
   return (
     <div>
-      <h2 className="mb-4 text-center text-lg font-medium text-slate-300">
+      <h2 className="mb-4 text-center text-lg font-medium text-slate-400 dark:text-slate-300">
         Things you want to be reminded of.
       </h2>
       <CreatePrinciple />
@@ -22,6 +22,7 @@ export function Priciniples() {
 }
 
 function CreatePrinciple() {
+  const [hasFocus, setHasFocus] = useState(false);
   const [priciple, setPriciple] = useState("");
   const [color, setColor] = useState("#047857");
   const form = useForm("principle", "href");
@@ -46,16 +47,18 @@ function CreatePrinciple() {
           placeholder="Priciple"
           className="flex-grow"
           onChange={(e) => setPriciple(e.currentTarget.value)}
+          onFocus={() => setHasFocus(true)}
+          onBlur={() => setHasFocus(false)}
         />
         <PopoverColorPicker color={color} onChange={setColor} />
       </div>
       <AnimatePresence>
-        {priciple.length > 0 && (
+        {(priciple.length > 0 || hasFocus) && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, delay: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
             <div className="flex items-center gap-2 pt-2">
               <Input
@@ -77,21 +80,24 @@ function PricipleList() {
   const principles = useLiveQuery(() => db.principles.toArray());
 
   return (
-    <ul className="mt-6 flex flex-wrap justify-center px-8">
-      <AnimatePresence>
-        {(principles || []).map((priciple) => (
-          <motion.li
-            key={priciple.id}
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "auto", opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <Priciple {...priciple} />
-          </motion.li>
-        ))}
-      </AnimatePresence>
-    </ul>
+    <LayoutGroup>
+      <ul className="mt-6 flex flex-wrap px-8">
+        <AnimatePresence>
+          {(principles || []).map((priciple) => (
+            <motion.li
+              layout
+              key={priciple.id}
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Priciple {...priciple} />
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </ul>
+    </LayoutGroup>
   );
 }
 
@@ -102,7 +108,7 @@ function Priciple({ id, principle, href, color }: DBPrinciple) {
 
   return (
     <div
-      className="m-1.5 flex items-center gap-2 whitespace-nowrap rounded py-1 px-3 text-sm text-white"
+      className="m-1.5 inline-flex items-center gap-2 whitespace-nowrap rounded py-1 px-3 text-sm text-white"
       style={{ background: color }}
     >
       {href ? (

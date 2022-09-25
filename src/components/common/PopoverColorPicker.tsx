@@ -1,10 +1,11 @@
 import { useClickOutsideListenerRef } from "@/utils/useClickOutsideListenerRef";
+import classNames from "classnames";
 import { ComponentProps, useCallback, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
 type Props = ComponentProps<typeof HexColorPicker>;
 
-export const PopoverColorPicker = ({ color, onChange }: Props) => {
+export const PopoverColorPicker = ({ color, onChange, className }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const close = useCallback(() => setIsOpen(false), []);
   const popover = useClickOutsideListenerRef<HTMLDivElement>(close);
@@ -12,7 +13,10 @@ export const PopoverColorPicker = ({ color, onChange }: Props) => {
   return (
     <div className="relative">
       <div
-        className="h-11 w-12 cursor-pointer rounded border border-transparent"
+        className={classNames(
+          "h-10 w-10 cursor-pointer rounded border border-transparent",
+          className
+        )}
         style={{ backgroundColor: color }}
         onClick={() => setIsOpen(true)}
       />
