@@ -81,7 +81,7 @@ function PricipleList() {
 
   return (
     <LayoutGroup>
-      <ul className="mt-6 flex flex-wrap px-8">
+      <ul className="mt-6 flex flex-wrap justify-center px-8">
         <AnimatePresence>
           {(principles || []).map((priciple) => (
             <motion.li
