@@ -13,7 +13,7 @@ export function Stats({ todos }: Props) {
   }, [todos]);
 
   return (
-    <div className="text-slate-700 dark:text-slate-300 text-lg text-right">
+    <div className="text-right text-lg italic text-slate-700 dark:text-slate-300">
       Total: {totalTimeStr}
     </div>
   );

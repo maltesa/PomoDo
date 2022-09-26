@@ -57,19 +57,19 @@ export function TodoInput({
   }, [description, remainingMs]);
 
   return (
-    <div className="dark:bg-slate-800 border border-transparent rounded bg-slate-50 px-4 py-3 flex items-center focus-within:is-active">
+    <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-slate-50 px-4 py-3 dark:bg-slate-800">
       <button
         className={classNames(
-          "rounded-full w-6 h-6 border border-slate-500 mr-4 active:bg-green-500",
+          "h-6 w-6 shrink-0 rounded-full border border-slate-500 active:bg-green-500",
           { "bg-green-500": todo.completed }
         )}
         onClick={handleComplete}
       />
-      <form onSubmit={handleSubmit} className="flex gap-3 w-full">
+      <form onSubmit={handleSubmit} className="flex w-full gap-3">
         <input
           autoFocus={autoFocus}
           type="text"
-          className="text-lg rounded bg-transparent outline-none flex-grow text-medium"
+          className="text-medium w-full flex-grow rounded bg-transparent text-lg outline-none"
           placeholder={placeholder || "Description"}
           value={description}
           onKeyDown={handleDelete}

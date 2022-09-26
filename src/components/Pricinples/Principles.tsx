@@ -12,7 +12,7 @@ import { useForm } from "@/utils/useForm";
 export function Priciniples() {
   return (
     <div>
-      <h2 className="mb-4 text-center text-lg font-medium text-slate-400 dark:text-slate-300">
+      <h2 className="mb-4 text-center text-lg font-medium text-slate-700 dark:text-slate-300">
         Things you want to be reminded of.
       </h2>
       <CreatePrinciple />
