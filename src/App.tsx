@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="flex h-screen flex-col items-center overflow-auto bg-slate-200 px-4 pt-16 pb-8 dark:bg-black dark:text-white lg:px-8 lg:pt-28">
       <WeekHeadline />
-      <div className="mt-20 grid grid-cols-2 gap-8 lg:mt-36">
+      <div className="mt-20 grid w-full grid-cols-2 gap-8 lg:mt-36">
         <div className="col-span-2 lg:col-span-1">
           <TodoList />
         </div>

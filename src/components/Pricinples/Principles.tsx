@@ -116,7 +116,7 @@ function Priciple({ id, principle, href, color }: DBPrinciple) {
           href={href}
           target="_blank"
           rel="noreferer"
-          className="hover:text-slate-700 dark:hover:text-slate-300"
+          className="hover:underline"
         >
           {principle}
         </a>
