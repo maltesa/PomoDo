@@ -9,7 +9,11 @@ function calcWeekNumber() {
 }
 
 export function getWeekType() {
-  return calcWeekNumber() % 2 === 0 ? "coding" : "marketing";
+  const oddCodingWeeks = !!localStorage.getItem("oddCodingWeeks");
+  const weekNo = calcWeekNumber();
+  if (oddCodingWeeks) return weekNo % 2 === 0 ? "marketing" : "coding";
+
+  return weekNo % 2 === 0 ? "coding" : "marketing";
 }
 
 export function useWeekType() {
