@@ -1,6 +1,6 @@
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useLiveQuery } from "dexie-react-hooks";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 import { Button } from "@/components/common/Button";
@@ -11,12 +11,12 @@ import { useForm } from "@/utils/useForm";
 
 export function Priciniples() {
   return (
-    <div>
-      <h2 className="mb-4 text-center text-lg font-medium text-slate-700 dark:text-slate-300">
+    <div className="space-y-4">
+      <h2 className="text-center text-lg font-medium text-slate-700 dark:text-slate-300">
         Things you want to be reminded of.
       </h2>
-      <CreatePrinciple />
       <PricipleList />
+      <CreatePrinciple />
     </div>
   );
 }
@@ -44,7 +44,7 @@ function CreatePrinciple() {
           required
           type="text"
           name="principle"
-          placeholder="Priciple"
+          placeholder="Add a new Priciple"
           className="flex-grow"
           onChange={(e) => setPriciple(e.currentTarget.value)}
           onFocus={() => setHasFocus(true)}
@@ -80,24 +80,22 @@ function PricipleList() {
   const principles = useLiveQuery(() => db.principles.toArray());
 
   return (
-    <LayoutGroup>
-      <ul className="mt-6 flex flex-wrap justify-center px-8">
-        <AnimatePresence>
-          {(principles || []).map((priciple) => (
-            <motion.li
-              layout
-              key={priciple.id}
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 10, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Priciple {...priciple} />
-            </motion.li>
-          ))}
-        </AnimatePresence>
-      </ul>
-    </LayoutGroup>
+    <ul className="flex flex-wrap justify-center overflow-hidden px-8">
+      <AnimatePresence>
+        {(principles || []).map((priciple) => (
+          <motion.li
+            key={priciple.id}
+            layout="position"
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 10, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Priciple {...priciple} />
+          </motion.li>
+        ))}
+      </AnimatePresence>
+    </ul>
   );
 }
 

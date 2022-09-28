@@ -51,6 +51,7 @@ export function TodoList() {
         values={todos}
         onReorder={handleReorder}
         className="flex flex-col gap-3"
+        initial={false}
       >
         {todos.map((todo, i) => (
           <Reorder.Item
@@ -64,6 +65,8 @@ export function TodoList() {
           </Reorder.Item>
         ))}
       </Reorder.Group>
+
+      {/* Create new Task */}
       <CreateTodo />
 
       {/* Stats */}
