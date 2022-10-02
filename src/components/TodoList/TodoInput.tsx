@@ -1,16 +1,17 @@
 import classNames from "classnames";
 import {
+  ChangeEventHandler,
   FormEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
-  useEffect,
-  useState,
+  useCallback,
 } from "react";
 import useSound from "use-sound";
 
 import { DBTodo } from "@/src/db";
 import wellDoneAudio from "@/src/static/audio/welldone.ogg";
 
+import { parseTimeStr } from "@/utils/timeStrings";
 import { TimeInput } from "./TimeInput";
 
 interface Props extends DBTodo {
@@ -32,13 +33,23 @@ export function TodoInput({
   ...todo
 }: Props) {
   const [playWellDone] = useSound(wellDoneAudio);
-  const [description, setDescription] = useState(todo.description);
-  const [remainingMs, setRemainingMs] = useState(todo.remainingMs);
 
   const handleComplete: MouseEventHandler<HTMLButtonElement> = (_e) => {
     playWellDone();
     if (onChange) onChange({ ...todo, completed: 1 });
   };
+
+  const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const description = e.currentTarget.value;
+    onChange && onChange({ ...todo, description });
+  };
+
+  const handleDurationChange = useCallback(
+    (newDurationMs: number) => {
+      onChange && onChange({ ...todo, remainingMs: newDurationMs });
+    },
+    [onChange, todo]
+  );
 
   const handleDelete: KeyboardEventHandler<HTMLInputElement> = (e) => {
     const value = e.currentTarget.value;
@@ -49,12 +60,16 @@ export function TodoInput({
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    onSubmit && onSubmit({ ...todo, description, remainingMs });
-  };
+    if (!onSubmit) return;
 
-  useEffect(() => {
-    onChange && onChange({ ...todo, description, remainingMs });
-  }, [description, remainingMs]);
+    // @ts-ignore
+    const description = e.target?.description?.value;
+    // @ts-ignore
+    const durationStr = e.target?.duration?.value || "25m";
+    const durationMs = parseTimeStr(durationStr);
+
+    onSubmit({ ...todo, description, remainingMs: durationMs });
+  };
 
   return (
     <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-slate-50 px-4 py-3 dark:bg-slate-800">
@@ -67,18 +82,20 @@ export function TodoInput({
       />
       <form onSubmit={handleSubmit} className="flex w-full gap-3">
         <input
+          name="description"
           autoFocus={autoFocus}
           type="text"
           className="text-medium w-full flex-grow rounded bg-transparent text-lg outline-none"
           placeholder={placeholder || "Description"}
-          value={description}
+          defaultValue={todo.description}
           onKeyDown={handleDelete}
-          onChange={(e) => setDescription(e.currentTarget.value)}
+          onChange={handleDescriptionChange}
         />
         <TimeInput
+          name="duration"
           isActive={isActive}
-          value={isActive ? todo.remainingMs : remainingMs}
-          onChange={(valueMs) => setRemainingMs(valueMs)}
+          value={todo.remainingMs}
+          onChange={handleDurationChange}
         />
         <input type="submit" className="hidden" />
       </form>

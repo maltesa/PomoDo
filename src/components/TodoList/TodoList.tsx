@@ -2,45 +2,34 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Reorder } from "framer-motion";
 import { useCallback } from "react";
 
-import { db, DBTodo } from "@/src/db";
+import { db } from "@/src/db";
 import { useWeekType } from "@/utils/useWeekType";
 import { CreateTodo } from "./CreateTodo";
 import { Stats } from "./Stats";
 import { Todo } from "./Todo";
 
+async function getTodos(weekType: "marketing" | "coding") {
+  return db.todos.where({ category: weekType, completed: 0 }).sortBy("pos");
+}
+
 export function TodoList() {
   const weekType = useWeekType();
-  const todos: DBTodo[] = useLiveQuery(
-    async () =>
-      await db.todos.where({ category: weekType, completed: 0 }).sortBy("pos"),
+  const ids: string[] = useLiveQuery(
+    async () => (await getTodos(weekType)).map((td) => td.id),
     [weekType],
     []
   );
 
   const handleReorder = useCallback(
-    (reorderedItems: DBTodo[]) => {
-      let swap1: DBTodo | undefined;
-      let swap2: DBTodo | undefined;
-
-      // Diff reordered todos with previous order to find swapped elements
-      reorderedItems.forEach(({ id }, i) => {
-        const item = todos[i];
-        if (item.id !== id) {
-          if (!swap1) swap1 = item;
-          else if (!swap2) swap2 = item;
-          else return;
-        }
+    (reorderedIds: string[]) => {
+      const newPositions = reorderedIds.map((id, index) => [id, index]);
+      db.transaction("rw", db.todos, async () => {
+        await Promise.all(
+          newPositions.map(([id, pos]) => db.todos.update(id, { pos }))
+        );
       });
-
-      // Swap item indices
-      if (swap1 && swap2) {
-        db.todos.bulkPut([
-          { ...swap1, pos: swap2.pos },
-          { ...swap2, pos: swap1.pos },
-        ]);
-      }
     },
-    [todos]
+    [ids]
   );
 
   return (
@@ -48,20 +37,20 @@ export function TodoList() {
       {/* TODO List */}
       <Reorder.Group
         axis="y"
-        values={todos}
+        values={ids}
         onReorder={handleReorder}
         className="flex flex-col gap-3"
         initial={false}
       >
-        {todos.map((todo, i) => (
+        {ids.map((id, i) => (
           <Reorder.Item
-            key={todo.id}
-            value={todo}
+            key={id}
+            value={id}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             layout
           >
-            <Todo isActive={i === 0} {...todo} />
+            <Todo isActive={i === 0} id={id} />
           </Reorder.Item>
         ))}
       </Reorder.Group>
@@ -70,7 +59,7 @@ export function TodoList() {
       <CreateTodo />
 
       {/* Stats */}
-      <Stats todos={todos} />
+      <Stats />
     </div>
   );
 }

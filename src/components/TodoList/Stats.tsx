@@ -1,16 +1,21 @@
-import type { DBTodo } from "@/src/db";
+import { db } from "@/src/db";
 import { serializeTimeStr } from "@/utils/timeStrings";
-import { useMemo } from "react";
+import { useWeekType } from "@/utils/useWeekType";
+import { useLiveQuery } from "dexie-react-hooks";
 
-interface Props {
-  todos: DBTodo[];
-}
-
-export function Stats({ todos }: Props) {
-  const totalTimeStr = useMemo(() => {
-    const totalMs = todos.reduce((sum, todo) => sum + todo.remainingMs, 0);
-    return serializeTimeStr(totalMs);
-  }, [todos]);
+export function Stats() {
+  const weekType = useWeekType();
+  const totalTimeStr = useLiveQuery(
+    async () => {
+      const todos = await db.todos
+        .where({ category: weekType, completed: 0 })
+        .sortBy("pos");
+      const totalMs = todos.reduce((sum, todo) => sum + todo.remainingMs, 0);
+      return serializeTimeStr(totalMs);
+    },
+    [weekType],
+    ""
+  );
 
   return (
     <div className="text-right text-lg italic text-slate-700 dark:text-slate-300">
