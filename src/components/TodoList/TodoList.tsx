@@ -1,22 +1,22 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { Reorder } from "framer-motion";
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 
+import { ActiveProjectContext } from "@/src/ActiveProjectContextProvider";
 import { db } from "@/src/db";
-import { useWeekType } from "@/utils/useWeekType";
 import { CreateTodo } from "./CreateTodo";
 import { Stats } from "./Stats";
 import { Todo } from "./Todo";
 
-async function getTodos(weekType: "marketing" | "coding") {
-  return db.todos.where({ category: weekType, completed: 0 }).sortBy("pos");
+async function getTodos(projectId: number) {
+  return db.todos.where({ projectId, completed: 0 }).sortBy("pos");
 }
 
 export function TodoList() {
-  const weekType = useWeekType();
+  const activeProject = useContext(ActiveProjectContext);
   const ids: string[] = useLiveQuery(
-    async () => (await getTodos(weekType)).map((td) => td.id),
-    [weekType],
+    async () => (await getTodos(activeProject.id!)).map((td) => td.id),
+    [activeProject.id],
     []
   );
 

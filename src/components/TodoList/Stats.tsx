@@ -1,19 +1,21 @@
+import { useLiveQuery } from "dexie-react-hooks";
+import { useContext } from "react";
+
+import { ActiveProjectContext } from "@/src/ActiveProjectContextProvider";
 import { db } from "@/src/db";
 import { serializeTimeStr } from "@/utils/timeStrings";
-import { useWeekType } from "@/utils/useWeekType";
-import { useLiveQuery } from "dexie-react-hooks";
 
 export function Stats() {
-  const weekType = useWeekType();
+  const activeProject = useContext(ActiveProjectContext);
   const totalTimeStr = useLiveQuery(
     async () => {
       const todos = await db.todos
-        .where({ category: weekType, completed: 0 })
+        .where({ projectId: activeProject.id, completed: 0 })
         .sortBy("pos");
       const totalMs = todos.reduce((sum, todo) => sum + todo.remainingMs, 0);
       return serializeTimeStr(totalMs);
     },
-    [weekType],
+    [activeProject.id],
     ""
   );
 

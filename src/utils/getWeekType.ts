@@ -15,7 +15,3 @@ export function getWeekType() {
 
   return weekNo % 2 === 0 ? "coding" : "marketing";
 }
-
-export function useWeekType() {
-  return getWeekType();
-}

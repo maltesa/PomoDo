@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import { sessionDurationMs } from "@/components/Timer";
+import { ActiveProjectContext } from "@/src/ActiveProjectContextProvider";
 import { db } from "@/src/db";
-import { useWeekType } from "@/utils/useWeekType";
 
 import { TodoInput } from "./TodoInput";
 
 export function CreateTodo() {
-  const weekType = useWeekType();
+  const activeProject = useContext(ActiveProjectContext);
   const [refresh, setReferesh] = useState(Math.random());
 
   return (
@@ -18,7 +18,7 @@ export function CreateTodo() {
       id="none"
       pos={0}
       placeholder="Add a new Task"
-      category={weekType}
+      projectId={activeProject.id}
       completed={0}
       description=""
       remainingMs={sessionDurationMs}

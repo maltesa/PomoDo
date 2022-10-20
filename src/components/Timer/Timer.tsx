@@ -5,7 +5,6 @@ import useSound from "use-sound";
 import { db } from "@/src/db";
 import { serializeTimeStr } from "@/src/utils/timeStrings";
 import { useTimer } from "@/utils/useTimer";
-import { getWeekType } from "@/utils/useWeekType";
 
 import { Button } from "@/components/common/Button";
 import sessionAudio from "@/src/static/audio/readytoflow.ogg";
@@ -16,7 +15,11 @@ export const breakDurationMs = 1000 * 60 * 5;
 // export const sessionDurationMs = 10000;
 // export const breakDurationMs = 5000;
 
-export function Timer() {
+interface Props {
+  activeProjectId: number;
+}
+
+export function Timer({ activeProjectId }: Props) {
   const [playBreak] = useSound(breakAudio);
   const [playSession] = useSound(sessionAudio);
   const [isBreak, setIsBreak] = useState(false);
@@ -29,7 +32,7 @@ export function Timer() {
     isBreak ? breakDurationMs : sessionDurationMs,
     {
       onTick: async (msSinceUpdate) =>
-        !isBreak && updateActiveTodo(msSinceUpdate),
+        !isBreak && updateActiveTodo(msSinceUpdate, activeProjectId),
       onCompletion: () => {
         nextTimer();
         return true;
@@ -46,10 +49,10 @@ export function Timer() {
 
   return (
     <div className="space-y-8">
-      <div className="text-7xl font-light text-center">
+      <div className="text-center text-7xl font-light">
         {serializeTimeStr(remainingMs)}
       </div>
-      <div className="flex justify-center gap-4 mx-auto">
+      <div className="mx-auto flex justify-center gap-4">
         <Button
           onClick={status === "running" ? stop : start}
           icon={status === "running" ? PauseIcon : PlayIcon}
@@ -62,13 +65,9 @@ export function Timer() {
   );
 }
 
-async function updateActiveTodo(timePassed: number) {
-  const weekType = getWeekType();
-
+async function updateActiveTodo(timePassed: number, projectId: number) {
   // FIXME: Find better way to find active ToDo
-  const todos = await db.todos
-    .where({ category: weekType, completed: 0 })
-    .sortBy("pos");
+  const todos = await db.todos.where({ projectId, completed: 0 }).sortBy("pos");
   if (!todos[0]) return;
 
   // Update active Todo
