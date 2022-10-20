@@ -8,16 +8,6 @@ import { debounce } from "lodash";
 import useSound from "use-sound";
 import { TodoInput } from "./TodoInput";
 
-const emptyTodo: DBTodo = {
-  id: "",
-  category: "",
-  completed: 0,
-  createdAt: Date.now(),
-  description: "",
-  pos: 0,
-  remainingMs: 0,
-};
-
 interface Props {
   id: string;
   isActive: boolean;
