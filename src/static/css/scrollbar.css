@@ -1,0 +1,17 @@
+/* width */
+::-webkit-scrollbar {
+  @apply w-2 bg-transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border: 3px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #bbb;
+}
