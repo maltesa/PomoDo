@@ -1,0 +1,18 @@
+{
+  "name": "PomoDo Devcontainer",
+  "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:18",
+  "postCreateCommand": "yarn install",
+  "remoteUser": "root",
+  "extensions": [
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
+    "sleistner.vscode-fileutils",
+    "wix.vscode-import-cost"
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    5172
+  ]
+}
