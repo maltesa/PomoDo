@@ -4,8 +4,8 @@ import { Priciniples } from "@/components/Pricinples";
 import { Projects } from "@/components/Projects";
 import { Timer } from "@/components/Timer";
 import { TodoList } from "@/components/TodoList";
-import { WeekHeadline } from "@/components/WeekHeadline/WeekHeadline";
 
+import { Label } from "@/components/common/Label";
 import { ActiveProjectContext } from "./ActiveProjectContextProvider";
 
 function App() {
@@ -20,21 +20,18 @@ function App() {
   }, [activeProject]);
 
   return (
-    <div className="flex h-screen flex-col items-center overflow-auto bg-slate-200 px-4 pt-16 pb-8 dark:bg-black dark:text-white lg:px-8 lg:pt-28">
-      <div className="space-y-8 text-center">
-        <WeekHeadline />
+    <div className="grid h-screen w-full grid-cols-12 overflow-auto bg-gray-200 dark:bg-gray-800 dark:text-white">
+      <div className="col-span-2 space-y-4 overflow-y-auto p-4">
+        <Label>My Projects</Label>
         <Projects />
       </div>
-      <div className="mt-20 grid w-full grid-cols-2 gap-8 lg:mt-36">
-        <div className="col-span-2 lg:col-span-1">
-          <TodoList />
-        </div>
-        <div className="col-span-2 flex flex-col gap-12 lg:col-span-1">
-          <Timer activeProjectId={activeProject.id!} />
-          <div>
-            <Priciniples />
-          </div>
-        </div>
+      <div className="col-span-12 space-y-4 overflow-y-auto p-4 lg:col-span-5">
+        <Label>My ToDos</Label>
+        <TodoList />
+      </div>
+      <div className="col-span-12 flex flex-col justify-between gap-12 overflow-y-auto px-4 pt-24 pb-16 lg:col-span-5">
+        <Timer activeProjectId={activeProject.id!} />
+        <Priciniples />
       </div>
     </div>
   );

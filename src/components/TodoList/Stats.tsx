@@ -20,7 +20,7 @@ export function Stats() {
   );
 
   return (
-    <div className="text-right text-lg italic text-slate-700 dark:text-slate-300">
+    <div className="text-right text-lg italic text-gray-700 dark:text-gray-300">
       Total: {totalTimeStr}
     </div>
   );

@@ -12,7 +12,7 @@ import { useForm } from "@/utils/useForm";
 export function Priciniples() {
   return (
     <div className="space-y-4">
-      <h2 className="text-center text-lg font-medium text-slate-700 dark:text-slate-300">
+      <h2 className="text-center text-lg font-medium text-gray-700 dark:text-gray-300">
         Things you want to be reminded of.
       </h2>
       <PricipleList />

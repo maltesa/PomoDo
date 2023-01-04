@@ -49,7 +49,7 @@ export function Timer({ activeProjectId }: Props) {
 
   return (
     <div className="space-y-8">
-      <div className="text-center text-7xl font-light">
+      <div className="text-center text-8xl font-light">
         {serializeTimeStr(remainingMs)}
       </div>
       <div className="mx-auto flex justify-center gap-4">

@@ -21,6 +21,7 @@
     "react-colorful": "^5.6.1",
     "react-dom": "^18.2.0",
     "timestring": "^6.0.0",
+    "tw-classed": "^0.4.1",
     "use-sound": "^4.0.1",
     "uuid": "^9.0.0"
   },

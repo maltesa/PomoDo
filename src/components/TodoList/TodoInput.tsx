@@ -72,10 +72,10 @@ export function TodoInput({
   };
 
   return (
-    <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-slate-50 px-4 py-3 dark:bg-slate-800">
+    <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
       <button
         className={classNames(
-          "h-6 w-6 shrink-0 rounded-full border border-slate-500 active:bg-green-500",
+          "active:bg-green-500 h-6 w-6 shrink-0 rounded-full border border-gray-500 outline-none focus:border-amber",
           { "bg-green-500": todo.completed }
         )}
         onClick={handleComplete}

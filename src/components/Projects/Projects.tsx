@@ -1,5 +1,4 @@
 import { db } from "@/src/db";
-import classNames from "classnames";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Button } from "../common/Button";
 
@@ -20,15 +19,16 @@ export function Projects() {
   if (!projects) return null;
 
   return (
-    <div className="space-x-4" onDrop={(e) => console.log(e)}>
+    <>
       {projects.map(({ id, name, isActive }) => (
         <Button
+          block
+          active={isActive === 1}
           onClick={() => activateProject(id!)}
-          className={classNames(isActive && "font-bold")}
         >
           {name}
         </Button>
       ))}
-    </div>
+    </>
   );
 }

@@ -14,5 +14,13 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     5172
-  ]
+  ],
+  "settings": {
+    "tailwindCSS.experimental.classRegex": [
+      [
+        "classed(?:\\.\\w*)?\\(([^)]*)\\)",
+        "[\"'`]([^\"'`]*).*?[\"'`]"
+      ]
+    ]
+  }
 }

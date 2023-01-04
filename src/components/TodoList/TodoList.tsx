@@ -34,7 +34,10 @@ export function TodoList() {
 
   return (
     <div className="space-y-8">
-      {/* TODO List */}
+      {/* Create new Task */}
+      <CreateTodo />
+
+      {/* List of Todo-Items */}
       <Reorder.Group
         axis="y"
         values={ids}
@@ -54,9 +57,6 @@ export function TodoList() {
           </Reorder.Item>
         ))}
       </Reorder.Group>
-
-      {/* Create new Task */}
-      <CreateTodo />
 
       {/* Stats */}
       <Stats />
