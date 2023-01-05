@@ -26,9 +26,8 @@ export function Todo({ id, isActive }: Props) {
 
   const debouncedHandleChange = useCallback(
     debounce((todo: DBTodo) => {
-      console.log(todo);
       db.todos.put(todo);
-    }, 300),
+    }, 100),
     []
   );
 

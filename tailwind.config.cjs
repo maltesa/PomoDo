@@ -13,11 +13,15 @@ module.exports = {
       white: colors.white,
       gray: { DEFAULT: colors.slate[500], ...colors.slate },
       amber: { DEFAULT: colors.amber[500], ...colors.amber },
+      emerald: { DEFAULT: colors.emerald[500], ...colors.emerald },
     }),
     extend: {
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
+      borderColor: ({ theme }) => ({
+        DEFAULT: theme("colors.gray.300", "currentColor"),
+      }),
     },
   },
   plugins: [],

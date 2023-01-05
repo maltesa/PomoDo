@@ -5,7 +5,7 @@ import classed from "tw-classed";
 const CheckboxButton = classed(
   "button",
   "h-6 w-6 shrink-0 rounded-full outline-none",
-  "text-gray-400 hover:text-gray-700 dark:text-gray-700 hover:dark:text-gray-600 focus:text-amber"
+  "text-gray-400 hover:text-gray-700 dark:text-gray-700 hover:dark:text-gray-600 focus:text-emerald"
 );
 
 interface Props extends ComponentProps<typeof CheckboxButton> {

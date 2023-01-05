@@ -4,15 +4,15 @@ import classed from "tw-classed";
 
 const BasicButton = classed(
   "button",
-  "rounded border border-transparent bg-white px-4 py-2 outline-2 outline-offset-2 outline-amber-400",
-  "dark:border-gray-700 dark:bg-gray-900",
+  "rounded border border-transparent bg-white text-gray-700 px-4 py-2 outline-2 outline-offset-2 outline-amber-400",
+  "dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300",
   "focus-visible:outline",
   "hover:bg-gray-50  hover:dark:bg-gray-800",
   "active:bg-gray-100 active:dark:bg-black",
   {
     variants: {
       active: {
-        true: "font-bold outline",
+        true: "font-medium outline",
       },
       block: { true: "block w-full" },
     },

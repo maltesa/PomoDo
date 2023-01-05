@@ -4,6 +4,7 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useCallback,
+  useState,
 } from "react";
 import useSound from "use-sound";
 
@@ -34,9 +35,12 @@ export function TodoInput({
   ...todo
 }: Props) {
   const [playWellDone] = useSound(wellDoneAudio);
+  const [isCompleted, setIsCompleted] = useState(todo.completed === 1);
 
   const handleComplete: MouseEventHandler<HTMLButtonElement> = (_e) => {
     playWellDone();
+    setIsCompleted(true);
+
     if (onChange) onChange({ ...todo, completed: 1 });
   };
 
@@ -74,7 +78,7 @@ export function TodoInput({
 
   return (
     <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
-      <TodoCheckbox checked={todo.completed === 1} onClick={handleComplete} />
+      <TodoCheckbox checked={isCompleted} onClick={handleComplete} />
       <form onSubmit={handleSubmit} className="flex w-full gap-3">
         <Input
           type="text"

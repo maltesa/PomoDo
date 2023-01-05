@@ -15,9 +15,21 @@ interface Props {
 }
 
 export function ActiveProjectContextProvider({ children }: Props) {
-  const activeProject = useLiveQuery(() =>
-    db.projects.where({ isActive: 1 }).first()
-  );
+  const activeProject = useLiveQuery(async () => {
+    let project = await db.projects.where({ isActive: 1 }).first();
+
+    if (!project) {
+      if (await db.projects.count()) {
+        project = await db.projects.toCollection().first();
+        db.projects.update(project?.id!, { isActive: 1 });
+      } else {
+        db.projects.add({ name: "You need one", isActive: 1, isDark: false });
+      }
+    }
+
+    return project;
+  });
+
   if (!activeProject) return null;
 
   return (
