@@ -23,10 +23,10 @@ function App() {
       <div className="lg:scroll-container col-span-12 lg:col-span-2">
         <Projects />
       </div>
-      <div className="lg:scroll-container col-span-12 lg:col-span-5">
+      <div className="lg:scroll-container col-span-12 lg:col-span-6">
         <TodoList />
       </div>
-      <div className="lg:scroll-container col-span-12 flex flex-col justify-between gap-12 px-4 pt-24 pb-16 lg:col-span-5">
+      <div className="lg:scroll-container col-span-12 flex flex-col justify-between gap-12 px-4 pt-24 pb-16 lg:col-span-4">
         <Timer activeProjectId={activeProject.id!} />
         <Priciniples />
       </div>
