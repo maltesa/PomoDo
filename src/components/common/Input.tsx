@@ -2,8 +2,17 @@ import classed from "tw-classed";
 
 export const Input = classed(
   "input",
-  "rounded border border-gray-200 bg-white px-3 py-2 text-lg outline-none",
-  "dark:border-gray-700 dark:bg-gray-800",
-  // "hover:bg-gray-100 hover:dark:bg-gray-700",
-  "focus:is-active"
+  "rounded  text-lg outline-none placeholder:dark:text-gray",
+  {
+    variants: {
+      variant: {
+        default:
+          "px-3 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:is-active",
+        simple: "px-1 bg-transparent",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
 );

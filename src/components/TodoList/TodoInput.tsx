@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import {
   ChangeEventHandler,
   FormEventHandler,
@@ -8,11 +7,13 @@ import {
 } from "react";
 import useSound from "use-sound";
 
+import { Input } from "@/components/common/Input";
 import { DBTodo } from "@/src/db";
 import wellDoneAudio from "@/src/static/audio/welldone.ogg";
-
 import { parseTimeStr } from "@/utils/timeStrings";
+
 import { TimeInput } from "./TimeInput";
+import { TodoCheckbox } from "./TodoCheckbox";
 
 interface Props extends DBTodo {
   autoFocus?: boolean;
@@ -73,19 +74,14 @@ export function TodoInput({
 
   return (
     <div className="focus-within:is-active flex items-center gap-3 rounded border border-transparent bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
-      <button
-        className={classNames(
-          "active:bg-green-500 h-6 w-6 shrink-0 rounded-full border border-gray-500 outline-none focus:border-amber",
-          { "bg-green-500": todo.completed }
-        )}
-        onClick={handleComplete}
-      />
+      <TodoCheckbox checked={todo.completed === 1} onClick={handleComplete} />
       <form onSubmit={handleSubmit} className="flex w-full gap-3">
-        <input
-          name="description"
-          autoFocus={autoFocus}
+        <Input
           type="text"
-          className="text-medium w-full flex-grow rounded bg-transparent text-lg outline-none"
+          name="description"
+          variant="simple"
+          autoFocus={autoFocus}
+          className="flex-grow"
           placeholder={placeholder || "Description"}
           defaultValue={todo.description}
           onKeyDown={handleDelete}
