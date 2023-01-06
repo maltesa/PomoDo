@@ -6,7 +6,7 @@
   </p>
 
 <p align="center">
-  <img width="937" alt="PomoDo" src="https://user-images.githubusercontent.com/4067078/192138405-ff4ceabc-d031-4dd8-8c13-936a9e6a41f0.png">
+  <img width="937" alt="PomoDo" src="./screenshot.png">
   </p>
 </p>
 
