@@ -1,63 +1,56 @@
-import {
-  ChangeEventHandler,
-  ComponentProps,
-  FocusEventHandler,
-  useState,
-} from "react";
+import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 
-import { parseTimeStr, serializeTimeStr } from "@/src/utils/timeStrings";
-import classed from "tw-classed";
+import { durationStr2Ms, ms2DurationStr } from '@/src/utils/timeStrings'
+import classed from 'tw-classed'
 
 const TimeInputBasic = classed(
-  "input",
-  "py-1 w-20 bg-white dark:bg-gray-800 font-medium outline-none rounded text-center text-sm border dark:border-gray-700",
-  { variants: { active: { true: "border-orange-500" } } }
-);
+  'input',
+  'py-1 w-20 bg-white font-medium outline-none border rounded text-center text-sm',
+  'dark:bg-gray-800 dark:border-gray-700'
+)
 
-interface Props
-  extends Omit<ComponentProps<typeof TimeInputBasic>, "onChange"> {
-  value: number;
-  isActive?: boolean;
-  onChange?: (ms: number) => void;
+interface Props extends Omit<ComponentProps<typeof TimeInputBasic>, 'onChange' | 'onSubmit'> {
+  value: number
+  submitOnBlur?: boolean
+  onChange?: (ms: number) => void
+  onSubmit?: (ms: number) => void
 }
 
 export function TimeInput({
-  isActive,
+  value,
+  submitOnBlur,
+  onBlur,
   onChange,
   onFocus,
-  onBlur,
-  value,
+  onSubmit,
   ...inputProps
 }: Props) {
-  const [hasFocus, setHasFocus] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [durationStr, setDurationStr] = useState(ms2DurationStr(value))
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (!onChange) return;
+  const handleSubmit = useCallback(() => {
+    onSubmit && onSubmit(durationStr2Ms(durationStr))
+  }, [onSubmit, durationStr])
 
-    const ms = parseTimeStr(e.currentTarget.value);
-    onChange(ms);
-  };
+  // Update duration string from external value if element is not focused
+  useEffect(() => {
+    if (inputRef.current === document.activeElement) return
 
-  const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
-    setHasFocus(false);
-    onBlur && onBlur(e);
-  };
-
-  const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {
-    setHasFocus(true);
-    e.currentTarget.select();
-    onBlur && onBlur(e);
-  };
+    setDurationStr(ms2DurationStr(value))
+  }, [value])
 
   return (
     <TimeInputBasic
       {...inputProps}
-      active={isActive}
       type="text"
-      value={hasFocus ? undefined : serializeTimeStr(value)}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onChange={handleChange}
+      ref={inputRef}
+      value={durationStr}
+      onBlur={() => submitOnBlur && handleSubmit()}
+      onChange={(e) => {
+        setDurationStr(e.currentTarget.value)
+        onChange && onChange(durationStr2Ms(e.currentTarget.value))
+      }}
+      onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
     />
-  );
+  )
 }

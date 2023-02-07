@@ -2,7 +2,7 @@ import classed from "tw-classed";
 
 export const Input = classed(
   "input",
-  "rounded  text-lg outline-none placeholder:dark:text-gray",
+  "rounded text-lg outline-none placeholder:dark:text-gray",
   {
     variants: {
       variant: {

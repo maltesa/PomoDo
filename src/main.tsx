@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ActiveProjectContextProvider } from "./ActiveProjectContextProvider";
 import App from "./App";
 import "./index.css";
+import { SettingsContextProvider } from "./SettingsContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ActiveProjectContextProvider>
+    <SettingsContextProvider>
       <App />
-    </ActiveProjectContextProvider>
+    </SettingsContextProvider>
   </React.StrictMode>
 );

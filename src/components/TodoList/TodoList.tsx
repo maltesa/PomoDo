@@ -3,8 +3,8 @@ import { AnimatePresence, Reorder } from "framer-motion";
 import { useCallback, useContext } from "react";
 
 import { Label } from "@/components/common/Label";
-import { ActiveProjectContext } from "@/src/ActiveProjectContextProvider";
 import { db } from "@/src/db";
+import { SettingsContext } from "@/src/SettingsContextProvider";
 
 import { CreateTodo } from "./CreateTodo";
 import { Stats } from "./Stats";
@@ -15,7 +15,7 @@ async function getTodos(projectId: number) {
 }
 
 export function TodoList() {
-  const activeProject = useContext(ActiveProjectContext);
+  const [{ activeProject }] = useContext(SettingsContext);
   const ids: string[] = useLiveQuery(
     async () => (await getTodos(activeProject.id!)).map((td) => td.id),
     [activeProject.id],

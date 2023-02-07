@@ -1,14 +1,15 @@
 import { useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import { sessionDurationMs } from "@/components/Timer";
-import { ActiveProjectContext } from "@/src/ActiveProjectContextProvider";
 import { db } from "@/src/db";
+import { SettingsContext } from "@/src/SettingsContextProvider";
 
 import { TodoInput } from "./TodoInput";
 
+const twentyFiveMinutes = 1000 * 60 * 25;
+
 export function CreateTodo() {
-  const activeProject = useContext(ActiveProjectContext);
+  const [{ activeProject }] = useContext(SettingsContext);
   const [refresh, setReferesh] = useState(Math.random());
 
   return (
@@ -21,7 +22,7 @@ export function CreateTodo() {
       projectId={activeProject.id}
       completed={0}
       description=""
-      remainingMs={sessionDurationMs}
+      remainingMs={twentyFiveMinutes}
       createdAt={0}
       onSubmit={async (newTodo) => {
         const pos = await db.todos.count();
