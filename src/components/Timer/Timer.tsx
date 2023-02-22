@@ -45,7 +45,7 @@ export function Timer({ activeProjectId }: Props) {
 
   return (
     <div className="space-y-8">
-      <div className="text-center text-8xl font-light">{ms2DurationStr(remainingMs)}</div>
+      <div className="text-center font-mono text-7xl font-light">{ms2DurationStr(remainingMs)}</div>
       <div className="mx-auto flex justify-center gap-4">
         <Button
           onClick={status === 'running' ? stop : start}
