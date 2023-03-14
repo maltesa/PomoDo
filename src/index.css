@@ -1,4 +1,4 @@
-@import "@fontsource/inter/variable";
+@import '@fontsource/inter/variable';
 
 @tailwind base;
 @tailwind components;
@@ -15,7 +15,7 @@ body {
 
   .scroll-container {
     scrollbar-gutter: stable;
-    @apply m-3 overflow-auto;
+    @apply overflow-auto;
   }
 
   /* width */

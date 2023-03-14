@@ -20,19 +20,24 @@ function App() {
   }, [activeProject])
 
   return (
-    <div className="grid h-screen w-full grid-cols-12 overflow-auto bg-gray-200 dark:bg-gray-800 dark:text-white">
-      <div className="lg:scroll-container col-span-12 lg:col-span-2">
-        <Projects />
+    <div className="absolute inset-0 flex justify-center bg-gray-200 dark:bg-gray-800 dark:text-white">
+      {/* Settings */}
+      <div className="fixed top-0 right-5 z-50 grid justify-items-end">
+        <SettingsButton className="mb-2 mr-4 mt-4 h-10 w-10 !rounded-full !p-0" />
       </div>
-      <div className="lg:scroll-container col-span-12 lg:col-span-6">
-        <TodoList />
-      </div>
-      <div className="lg:scroll-container col-span-12 flex flex-col justify-between gap-12 px-4 pt-24 pb-16 lg:col-span-4">
-        <div className="fixed top-0 right-0 grid justify-items-end">
-          <SettingsButton className="mb-2 mr-4 mt-4 h-10 w-10 rounded-full !p-0" />
+
+      {/* App Layout */}
+      <div className="scroll-container m-4 flex h-screen w-full max-w-[110rem] flex-col-reverse gap-4 overflow-auto xl:flex-row">
+        <div className="xl:scroll-container bottom-0 w-full flex-none xl:w-64">
+          <Projects />
         </div>
-        <Timer activeProjectId={activeProject.id!} />
-        <Priciniples />
+        <div className="xl:scroll-container w-full">
+          <TodoList />
+        </div>
+        <div className="xl:scroll-container flex w-full flex-none flex-col gap-4 pt-4 xl:w-[26rem] xl:gap-16 xl:pt-24 xl:pb-16">
+          <Timer activeProjectId={activeProject.id!} />
+          <Priciniples />
+        </div>
       </div>
     </div>
   )
