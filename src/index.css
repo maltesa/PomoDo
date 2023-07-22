@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  @apply overflow-hidden;
+  @apply overflow-hidden bg-gray-200 dark:bg-gray-800 dark:text-white;
 }
 
 @layer utilities {
