@@ -48,10 +48,10 @@ export function TodoList({ projectId }: Props) {
               <Reorder.Item
                 key={id}
                 value={id}
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: 0.04 * i }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ delay: 0.02 * i, ease: 'backOut', bounce: 0.5 }}
               >
                 <div className="py-1.5">
                   <Todo isActive={i === 0} id={id} />
