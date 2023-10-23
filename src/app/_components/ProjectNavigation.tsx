@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom'
 import { db } from '@/lib/db'
 import { Button, Label } from '@/ui'
 
-export function ProjectList() {
+export function ProjectNavigation() {
   const { projectId } = useParams() as { projectId: string }
   const projects = useLiveQuery(() => db.projects.toArray())
 

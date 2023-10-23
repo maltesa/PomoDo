@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
-import { ProjectList } from './_components/ProjectList'
+import { ProjectNavigation } from './_components/ProjectNavigation'
 import { SettingsButton } from './_components/Settings'
 
 export function Layout() {
@@ -10,7 +10,7 @@ export function Layout() {
         <SettingsButton />
       </div>
       <div className="xl:scroll-container bottom-0 w-full flex-none xl:w-64">
-        <ProjectList />
+        <ProjectNavigation />
       </div>
       <Outlet />
     </main>

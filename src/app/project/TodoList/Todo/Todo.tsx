@@ -1,18 +1,18 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useCallback, useState } from 'react'
-import useSound from 'use-sound'
 
 import { db, DBTodo } from '@/lib/db'
+import { useTimerSound } from '@/lib/hooks/useTimerSound'
 
 import { TodoInput } from '../TodoInput'
-import overtimeAudio from './overtime.ogg'
 
 interface Props {
   id: string
   isActive: boolean
 }
 export function Todo({ id, isActive }: Props) {
-  const [playOvertime] = useSound(overtimeAudio)
+  const { playOvertime } = useTimerSound()
+
   const [played, setPlayed] = useState(false)
   const todo = useLiveQuery(async () => {
     const todo = await db.todos.get(id)

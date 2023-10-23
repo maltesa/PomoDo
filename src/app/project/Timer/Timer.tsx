@@ -1,14 +1,11 @@
 import { PauseIcon, PlayIcon, TrackNextIcon } from '@radix-ui/react-icons'
 import { useCallback, useEffect, useState } from 'react'
-import useSound from 'use-sound'
 
 import { db } from '@/lib/db'
+import { useTimerSound } from '@/lib/hooks/useTimerSound'
 import { ms2DurationStr } from '@/lib/utils'
 import { useSettings } from '@/src/app/_components/Settings'
 import { Button } from '@/ui'
-
-import sessionAudio from './audio/readytoflow.ogg'
-import breakAudio from './audio/takeabreak.ogg'
 
 import { useTimer } from './useTimer'
 
@@ -18,9 +15,8 @@ interface Props {
 
 export function Timer({ projectId }: Props) {
   const { breakDurationMs, sessionDurationMs } = useSettings()
+  const { playBreakStart, playSessionStart } = useTimerSound()
 
-  const [playBreak] = useSound(breakAudio)
-  const [playSession] = useSound(sessionAudio)
   const [isBreak, setIsBreak] = useState(false)
 
   const nextTimer = useCallback(() => {
@@ -42,7 +38,7 @@ export function Timer({ projectId }: Props) {
   useEffect(() => {
     if (status !== 'running') return
 
-    isBreak ? playBreak() : playSession()
+    isBreak ? playBreakStart() : playSessionStart()
   }, [isBreak, status])
 
   return (

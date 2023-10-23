@@ -15,7 +15,7 @@ interface Props {
 
 export function TodoList({ projectId }: Props) {
   const todos = useLiveQuery(
-    async () => db.todos.where({ projectId, completed: 0 }).sortBy('pos'),
+    async () => await db.todos.where({ projectId, completed: 0 }).reverse().sortBy('pos'),
     [projectId],
     []
   )
@@ -23,7 +23,8 @@ export function TodoList({ projectId }: Props) {
 
   const handleReorder = useCallback(
     (reorderedIds: string[]) => {
-      const newPositions = reorderedIds.map((id, index) => [id, index])
+      const nItems = reorderedIds.length
+      const newPositions = reorderedIds.map((id, index) => [id, nItems - index])
       db.transaction('rw', db.todos, async () => {
         await Promise.all(newPositions.map(([id, pos]) => db.todos.update(id, { pos })))
       })
