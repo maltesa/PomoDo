@@ -59,7 +59,7 @@ export function Timer({ projectId }: Props) {
 
 async function updateActiveTodo(timePassed: number, projectId: number) {
   // FIXME: Find better way to find active ToDo
-  const todos = await db.todos.where({ projectId, completed: 0 }).sortBy('pos')
+  const todos = await db.todos.where({ projectId, completed: 0 }).reverse().sortBy('pos')
   if (!todos[0]) return
 
   // Update active Todo
